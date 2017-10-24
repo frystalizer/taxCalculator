@@ -42,7 +42,7 @@ public class IncomeTaxCalculator {
 		return income.compareTo(IncomeGrade.GRADE_SEVEN.getMinIncome()) > 0;
 	}
 	
-	private static BigDecimal calculateTax(BigDecimal income) {
+	public static BigDecimal calculateTax(BigDecimal income) {
 		BigDecimal tax = new BigDecimal(0);
 		if(isGradeOne(income)) {
 			tax = IncomeGrade.GRADE_ONE.getStaticAmount()
@@ -98,20 +98,5 @@ public class IncomeTaxCalculator {
 	// -1 lesser than
 	// 0 equal to
 	// 1 greater than
-	public static void main(String[] args) {
-		System.out.println("Please input your income.");
-		
-		Scanner scanner = new Scanner(System.in);
-		BigDecimal income = scanner.nextBigDecimal();
-		
-		scanner.close();
-		BigDecimal tax = calculateTax(income);
-		DecimalFormat formatter = (DecimalFormat)NumberFormat.getNumberInstance();
-		formatter.applyPattern("###,###.###");
-				
-		System.out.println("Your income is: " + formatter.format(income) + " VND");
-		System.out.println("Your tax is: " + formatter.format(tax) + " VND");
-		
-		
-	}
+	
 }
