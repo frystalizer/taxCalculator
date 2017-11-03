@@ -18,7 +18,8 @@ public class Application {
 		formatter.applyPattern("###,###.###");
 				
 		System.out.println("Your income is: " + formatter.format(income) + " VND");
-		System.out.println("Your tax is: " + formatter.format(tax) + " VND");
+		System.out.println("Your taxed income is: " + formatter.format(tax) + " VND");
+		System.out.println("Your NET income is: " + formatter.format(income.subtract(tax)) + " VND");
 		
 		
 	}

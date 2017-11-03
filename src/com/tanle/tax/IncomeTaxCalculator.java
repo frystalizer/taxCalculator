@@ -1,102 +1,100 @@
 package com.tanle.tax;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Scanner;
+
+import com.tanle.tax.enums.FixedTaxAmountGrade;
+import com.tanle.tax.enums.IncomeGrade;
+import com.tanle.tax.enums.TaxPercentageGrade;
 
 public class IncomeTaxCalculator {
 
 	private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 	
 	private static boolean isGradeOne(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_ONE.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_ONE.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeTwo(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_TWO.getMinIncome()) > 0 
-				&& income.compareTo(IncomeGrade.GRADE_TWO.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMin()) > 0 
+				&& income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeThree(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_THREE.getMinIncome()) > 0 
-				&& income.compareTo(IncomeGrade.GRADE_TWO.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_THREE.getIncomeRange().getMin()) > 0 
+				&& income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeFour(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_FOUR.getMinIncome()) > 0 
-				&& income.compareTo(IncomeGrade.GRADE_TWO.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_FOUR.getIncomeRange().getMin()) > 0 
+				&& income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeFive(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_FIVE.getMinIncome()) > 0 
-				&& income.compareTo(IncomeGrade.GRADE_TWO.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_FIVE.getIncomeRange().getMin()) > 0 
+				&& income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeSix(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_SIX.getMinIncome()) > 0 
-				&& income.compareTo(IncomeGrade.GRADE_TWO.getMaxIncome()) <= 0;
+		return income.compareTo(IncomeGrade.GRADE_SIX.getIncomeRange().getMin()) > 0 
+				&& income.compareTo(IncomeGrade.GRADE_TWO.getIncomeRange().getMax()) <= 0;
 	}
 	
 	private static boolean isGradeSeven(BigDecimal income) {
-		return income.compareTo(IncomeGrade.GRADE_SEVEN.getMinIncome()) > 0;
+		return income.compareTo(IncomeGrade.GRADE_SEVEN.getIncomeRange().getMin()) > 0;
 	}
 	
 	public static BigDecimal calculateTax(BigDecimal income) {
 		BigDecimal tax = new BigDecimal(0);
 		if(isGradeOne(income)) {
-			tax = IncomeGrade.GRADE_ONE.getStaticAmount()
+			tax = FixedTaxAmountGrade.ONE.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_ONE.getMinIncome())
+							.subtract(IncomeGrade.GRADE_ONE.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_ONE.getPercentage()));
+							.multiply(TaxPercentageGrade.ONE.getPercent()));
 		}
 		if(isGradeTwo(income)) {
-			tax = IncomeGrade.GRADE_TWO.getStaticAmount()
+			tax = FixedTaxAmountGrade.TWO.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_TWO.getMinIncome())
+							.subtract(IncomeGrade.GRADE_TWO.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_TWO.getPercentage()));
+							.multiply(TaxPercentageGrade.TWO.getPercent()));
 		}
 		if(isGradeThree(income)) {
-			tax = IncomeGrade.GRADE_THREE.getStaticAmount()
+			tax =  FixedTaxAmountGrade.THREE.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_THREE.getMinIncome())
+							.subtract(IncomeGrade.GRADE_THREE.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_THREE.getPercentage()));
+							.multiply(TaxPercentageGrade.THREE.getPercent()));
 		}
 		if(isGradeFour(income)) {
-			tax = IncomeGrade.GRADE_FOUR.getStaticAmount()
+			tax = FixedTaxAmountGrade.FOUR.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_FOUR.getMinIncome())
+							.subtract(IncomeGrade.GRADE_FOUR.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_FOUR.getPercentage()));	
+							.multiply(TaxPercentageGrade.FOUR.getPercent()));	
 		}
 		if(isGradeFive(income)) {
-			tax = IncomeGrade.GRADE_FIVE.getStaticAmount()
+			tax = FixedTaxAmountGrade.FIVE.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_FIVE.getMinIncome())
+							.subtract(IncomeGrade.GRADE_FIVE.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_FIVE.getPercentage()));
+							.multiply(TaxPercentageGrade.FIVE.getPercent()));
 		}
 		if(isGradeSix(income)) {
-			tax = IncomeGrade.GRADE_SIX.getStaticAmount()
+			tax = FixedTaxAmountGrade.SIX.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_SIX.getMinIncome())
+							.subtract(IncomeGrade.GRADE_SIX.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_SIX.getPercentage()));
+							.multiply(TaxPercentageGrade.SIX.getPercent()));
 		}
 		if(isGradeSeven(income)) {
-			tax = IncomeGrade.GRADE_SEVEN.getStaticAmount()
+			tax = FixedTaxAmountGrade.SEVEN.getAmount()
 					.add(income
-							.subtract(IncomeGrade.GRADE_SEVEN.getMinIncome())
+							.subtract(IncomeGrade.GRADE_SEVEN.getIncomeRange().getMin())
 							.divide(ONE_HUNDRED)
-							.multiply(IncomeGrade.GRADE_SEVEN.getPercentage()));
+							.multiply(TaxPercentageGrade.SEVEN.getPercent()));
 		}
 		return tax;
 	}
-	// -1 lesser than
-	// 0 equal to
-	// 1 greater than
 	
 }
